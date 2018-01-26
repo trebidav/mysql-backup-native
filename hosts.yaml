@@ -1,0 +1,7 @@
+--- 
+- name: web-front-03-all    # name of the backup
+  host: localhost           # host of the mysql
+  port: 3306                # port used by the mysql
+  datadir: /var/lib/mysql   # mysql datadir
+  user: backup              # mysql user
+  password: YXNsa2pmYXNka2ZqYXNsZGtm  # mysql user password
