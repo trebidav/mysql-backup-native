@@ -79,7 +79,11 @@ for host in hosts:
     	exit(1)
 
     try:
-    	os.system("innobackupex --user="+host["user"]+" --password="+host["password"]+" --host="+host["host"]+" --port="+str(host["port"])+" --stream=tar "+host["datadir"]+" | gzip - > "+path+"/temp/"+filename)
+    	if (arg.verbose):
+    		os.system("innobackupex --user="+host["user"]+" --password="+host["password"]+" --host="+host["host"]+" --port="+str(host["port"])+" --stream=tar "+host["datadir"]+" | gzip - > "+path+"/temp/"+filename+" 2>&1 >/dev/null ")
+    	else:
+    		os.system("innobackupex --user="+host["user"]+" --password="+host["password"]+" --host="+host["host"]+" --port="+str(host["port"])+" --stream=tar "+host["datadir"]+" | gzip - > "+path+"/temp/"+filename)
+    		
     except Exception as exc:
         print(exc)
 
