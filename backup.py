@@ -71,9 +71,7 @@ for host in hosts:
     filename = host["name"]+"-"+timestamp+".tar.gz"
 
     try:
-    	#os.system("set -o pipefail && mkdir -p "+os.path.abspath(path)+"/temp && innobackupex --user="+host["user"]+" --password="+host["password"]+" --host="+host["host"]+" --port="+str(host["port"])+" --stream=tar "+host["datadir"]+" | gzip - > "+path+"/temp/"+filename)
-    	print("set -o pipefail && mkdir -p "+os.path.abspath(path)+"/temp && innobackupex --user="+host["user"]+" --password="+host["password"]+" --host="+host["host"]+" --port="+str(host["port"])+" --stream=tar "+host["datadir"]+" | gzip - > "+path+"/temp/"+filename)
-    	os.system("touch "+path+"/temp/"+filename)
+    	os.system("set -o pipefail && mkdir -p "+os.path.abspath(path)+"/temp && innobackupex --user="+host["user"]+" --password="+host["password"]+" --host="+host["host"]+" --port="+str(host["port"])+" --stream=tar "+host["datadir"]+" | gzip - > "+path+"/temp/"+filename)
     	exit(1)
     except:
     	pass
