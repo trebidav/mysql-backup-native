@@ -74,7 +74,7 @@ for host in hosts:
 
     try:
     	os.makedirs(os.path.abspath(path)+"/temp")
-    except:
+    except Exception as exc:
     	print(exc)
     	exit(1)
 
