@@ -67,14 +67,33 @@ timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
 # For every host run xtrabackup for the whole db
 
 for host in hosts:
-       
+
     filename = host["name"]+"-"+timestamp+".tar.gz"
 
+    if (args.verbose): print("Backing up " + host["name"] +" to file " + path + "/" + filename )
+
     try:
-    	os.system("set -o pipefail && mkdir -p "+os.path.abspath(path)+"/temp && innobackupex --user="+host["user"]+" --password="+host["password"]+" --host="+host["host"]+" --port="+str(host["port"])+" --stream=tar "+host["datadir"]+" | gzip - > "+path+"/temp/"+filename)
-    	exit(1)
+    	os.makedirs(os.path.abspath(path)+"/temp")
     except:
-    	pass
+    	print(exc)
+    	exit(1)
+
+    try:
+    	os.system("innobackupex --user="+host["user"]+" --password="+host["password"]+" --host="+host["host"]+" --port="+str(host["port"])+" --stream=tar "+host["datadir"]+" | gzip - > "+path+"/temp/"+filename)
+    except Exception as exc:
+        print(exc)
+
+        try:
+            os.remove(args.backupdir+"/temp/"+filename)
+        except:
+            pass
+
+        try:
+            os.rmdir(args.backupdir+"/temp/")
+        except:
+            pass
+
+        exit(1)
 
 
 
